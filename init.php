@@ -14,8 +14,8 @@ $GLOBALS['config'] = [
     'mysql' => [
         'host' => 'localhost',
         'username' => 'root',
-        'password' => '',
-        'database' => 'test',
+        'password' => 'root',
+        'database' => 'sandbox',
         'something' => [
             'no' => [
                 'foo' => [
@@ -26,5 +26,6 @@ $GLOBALS['config'] = [
                 ],
     'session' => [
         'token_name' => 'token',
+        'user_session' => 'user'
     ]    
             ];
