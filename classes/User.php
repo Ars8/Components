@@ -3,9 +3,11 @@
 class User {
     private $db, $data, $session_name, $isLoggedIn, $cookieName;
 
+    
     public function __construct($user = null) {
         $this->db = Database::getInstance();
         $this->session_name = Config::get('session.user_session');
+        $this->cookieName = Config::get('cookie.cookie_name');
 
         if(!$user) {
             if(Session::exists($this->session_name)) {
@@ -48,7 +50,7 @@ class User {
                         } else {
                             $hash = $hashCheck->first()->hash;
                         }
-                        Cookie::put('_expiry', $hash, Config::get('cookie.cookie_expiry'));
+                        Cookie::put($this->cookieName, $hash, Config::get('cookie.cookie_expiry'));
                     }
                     return true;
                 }
