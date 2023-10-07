@@ -41,14 +41,14 @@ class User {
                         $hashCheck = $this->db->get('user_sessions', ['user_id', '=', $this->data()->id]);
 
                         if(!$hashCheck->count()) {
-                            $this->db->insert('user_session', [
+                            $this->db->insert('user_sessions', [
                                 'user_id' => $this->data()->id,
                                 'hash' => $hash
                             ]);
                         } else {
                             $hash = $hashCheck->first()->hash;
                         }
-                        Cookie::put($this->cookieName, $hash, Config::get('cookie.cookie_expiry'));
+                        Cookie::put('_expiry', $hash, Config::get('cookie.cookie_expiry'));
                     }
                     return true;
                 }
@@ -81,5 +81,9 @@ class User {
 
     public function logout() {
         return Session::delete($this->session_name);
+    }
+
+    public function exists() {
+        return (!empty($this->data())) ? true : false;
     }
 }
