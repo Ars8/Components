@@ -15,8 +15,6 @@ class User {
 
                 if($this->find($user)) {
                     $this->isLoggedIn = true;
-                } else {
-                    //logout
                 }
             }            
         } else {
@@ -87,5 +85,29 @@ class User {
 
     public function exists() {
         return (!empty($this->data())) ? true : false;
+    }
+
+    public function update($fields = [], $id = null) {
+
+        if(!$id && $this->isLoggedIn()) {
+            $id = $this->data()->id;
+        }
+
+        $this->db->update('users', $id, $fields);
+    }
+
+    public function hasPermissions($key = null) {
+        $group = $this->db->get('groups', ['id', '=', $this->data()->group_id]);
+        var_dump($group);
+ 
+        if($group->count()) {
+            $permissions = $group->first()->permissions;
+            $permissions = json_decode($permissions, true);
+
+            if($permissions[$key]) {
+                return true;
+            }
+        }
+        return false;
     }
 }
