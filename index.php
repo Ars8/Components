@@ -10,10 +10,8 @@ if($user->isLoggedIn()) {
     echo "<p><a href='changepassword.php'>Change password</a></p>";
 
     if($user->hasPermissions('admin')) {
-        echo "You are moderator";
+        echo "You are admin";
     }
 } else {
     echo "<a href='login.php'>Login</a> or <a href='register.php'>Register</a>";
 }
-//setcookie('cookie', 'cookie', time() + 3600, '/');
-echo(Config::get('cookie.cookie_expiry'));
